@@ -1,18 +1,25 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Dictionaries Review</h1>
+    <dictionaryTable></dictionaryTable>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import dictionaryTable from "../components/dictionaryTable.vue";
 
 export default {
-  name: 'home',
   components: {
-    HelloWorld
+    dictionaryTable
   }
-}
+};
 </script>
+<style>
+.home {
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  max-width: 800px;
+  margin: auto;
+}
+</style>
