@@ -17,9 +17,11 @@ export default {
 <style>
 .home {
   text-align: center;
+  min-height: 100vh;
   padding-top: 50px;
   padding-bottom: 50px;
-  max-width: 750px;
-  margin: auto;
+  border-style: solid;
+  border-color: rgb(110, 17, 17);
+  border-width: 20px;
 }
 </style>

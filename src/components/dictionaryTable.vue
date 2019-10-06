@@ -1,9 +1,6 @@
 <template>
-  <div>
+  <div class="general">
     <div class="review">
-      <p
-        v-if="edit == true"
-      >(To edit the text cells click on the small edit button and confirm with the green check. To save all other changes click the big green check at the bottom)</p>
       <!-- Creating tables for the review -->
       <div v-for="(dictionary, index) in dictionaries" :key="index">
         <h2>
@@ -119,7 +116,7 @@
     <!-- Here we activate/deactivate the editing interface based on the true/false "edit" data -->
     <div class="footer">
       <p v-if="edit == false">Click here to see all the editing options!</p>
-      <p v-else>Click here to save the changes!</p>
+      <p v-else>Click here to go back to the dictionaries review!</p>
       <button class="btn" v-if="edit == false" v-on:click="edit = !edit">
         <img src="../assets/31-512.png" alt="edit icon" />
       </button>
@@ -169,6 +166,10 @@ export default {
 </script>
 
 <style>
+.general {
+  max-width: 750px;
+  margin: auto;
+}
 input {
   text-align: center;
 }
@@ -187,7 +188,7 @@ h2 {
   width: 125px;
 }
 .background {
-  background-color: rgb(134, 194, 134);
+  background-color: rgb(194, 194, 194);
 }
 .tableInput {
   margin: auto;
@@ -199,6 +200,7 @@ h2 {
 td,
 th {
   border-style: solid;
+  border-color: rgb(110, 17, 17);
   height: 40px;
   width: 128px;
   text-align: center;

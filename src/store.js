@@ -35,6 +35,7 @@ export default new Vuex.Store({
       state.dictionaries.splice(payload, 1)
     },
     postChange(state, payload) {
+      //We change the existing value of a row with the new inputs
       state.dictionaries[payload.index].values[payload.i] = { domain: payload.value.domain, range: payload.value.range }
     },
     addRow(state, payload) {
@@ -42,7 +43,7 @@ export default new Vuex.Store({
       if (payload.select == null || payload.inputDomain == "" || payload.inputRange == "") {
         return alert("Please insert some data!")
       }
-      //Changing value of found to true if duplicated, forks, cycles or chains happening
+      //Changing value of found to true if duplicates, forks, cycles or chains happening
       let found = false;
       state.dictionaries[payload.select].values.forEach(value => {
         if (value.domain.toLowerCase() == payload.inputDomain.toLowerCase() || value.domain.toLowerCase() == payload.inputRange.toLowerCase() || value.range.toLowerCase() == payload.inputDomain.toLowerCase()) {
@@ -53,7 +54,7 @@ export default new Vuex.Store({
       if (found) {
         return alert("This data already exists!")
       }
-      //Otherwise the nuevo data will be added to the dictionary
+      //Otherwise the new data will be added to the dictionary
       state.dictionaries[payload.select].values.push({ domain: payload.inputDomain, range: payload.inputRange })
     },
     createDictionary(state, payload) {
