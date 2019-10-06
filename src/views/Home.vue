@@ -19,7 +19,7 @@ export default {
   text-align: center;
   padding-top: 50px;
   padding-bottom: 50px;
-  max-width: 800px;
+  max-width: 750px;
   margin: auto;
 }
 </style>

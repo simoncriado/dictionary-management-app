@@ -1,14 +1,15 @@
 <template>
   <div>
     <div class="review">
+      <p
+        v-if="edit == true"
+      >(To edit the text cells click on the small edit button and confirm with the green check. To save all other changes click the big green check at the bottom)</p>
+      <!-- Creating tables for the review -->
       <div v-for="(dictionary, index) in dictionaries" :key="index">
         <h2>
           {{dictionary.title}}
-          <button
-            v-if="edit == true"
-            v-on:click="deleteDictionary(index)"
-            class="button"
-          >
+          <!-- Button to delete one dictionary based on index -->
+          <button v-if="edit == true" v-on:click="deleteDictionary(index)" class="button">
             <img class="cross" src="../assets/icon-02-512.png" alt="red cross" />
           </button>
         </h2>
@@ -20,29 +21,33 @@
             </tr>
           </thead>
           <tbody>
+            <!-- Looping through all values to display data in the tables, inside are all edition options (delete one row, edit one row) -->
             <tr v-for="(value, i) in dictionary.values" :key="i">
-              <td v-if="edit == false">{{value.domain}}</td>
-              <td v-else>
+              <td v-if="disabled == false">{{value.domain}}</td>
+              <td v-else class="background">
                 <input class="edit" v-model="value.domain" />
               </td>
-              <td v-if="edit == false">{{value.range}}</td>
-              <td v-else>
+              <td v-if="disabled == false">{{value.range}}</td>
+              <td v-else class="background">
                 <input class="edit" v-model="value.range" />
               </td>
-              <!-- <button
-                v-if="disabled && edit == true"
+              <!-- Here I would like to have just one edit/save button... but as I use index and i to save the changes I need the buttons to be insede the for-loop -->
+              <!-- The next two buttons are to edit and save changes in the rows -->
+              <button
+                v-if="disabled == false && edit == true"
                 v-on:click="disabled = !disabled"
                 class="button"
               >
                 <img class="cross" src="../assets/31-512.png" alt="edit icon" />
-              </button>-->
+              </button>
               <button
-                v-if="edit == true"
+                v-if="edit == true && disabled == true"
                 class="button"
                 v-on:click="postChange({value, index, i}), (disabled = !disabled)"
               >
                 <img class="cross" src="../assets/images.png" alt="green check" />
               </button>
+              <!-- Button to delete one single row based on index (which dictionary it is) and i (a single row) -->
               <button v-if="edit == true" v-on:click="deleteRow({index, i})" class="button">
                 <img class="cross" src="../assets/icon-02-512.png" alt="red cross" />
               </button>
@@ -51,11 +56,13 @@
         </table>
       </div>
     </div>
+    <!-- Adding new rows to an existing dictionary (this will update itself if we create a new dictionary) -->
     <div v-if="edit == true">
       <h2>Add new domain to an existing dictionary</h2>
       <table class="tableInput">
         <tbody>
           <td>
+            <!-- Here we call the function setSelected to know to which dictionary we want to add a row -->
             <select class="dropdown" @input="setSelected">
               <option value="Dictinaries" selected>Click HERE to select a dictionary</option>
               <option
@@ -71,6 +78,7 @@
           <td>
             <input v-model="inputRange" placeholder="Add new range..." />
           </td>
+          <!-- We add a row to a specific dictionary with the new domain and range. After that we reset the text inputs to be empty again -->
           <button v-on:click="addRow({select, inputDomain, inputRange}), reset()" class="button">
             <img
               class="cross"
@@ -81,6 +89,7 @@
         </tbody>
       </table>
     </div>
+    <!-- Here we create a new dictionary with the dictionary name and first domain/range. To add further rows we will use the function above (add row) -->
     <div v-if="edit == true">
       <h2>Create a new dictionary</h2>
       <table class="tableInput">
@@ -107,10 +116,15 @@
         </tbody>
       </table>
     </div>
+    <!-- Here we activate/deactivate the editing interface based on the true/false "edit" data -->
     <div class="footer">
-      <p>Click here to see all the editing options!</p>
-      <button v-on:click="edit = !edit">
+      <p v-if="edit == false">Click here to see all the editing options!</p>
+      <p v-else>Click here to save the changes!</p>
+      <button class="btn" v-if="edit == false" v-on:click="edit = !edit">
         <img src="../assets/31-512.png" alt="edit icon" />
+      </button>
+      <button class="btn" v-else v-on:click="edit = !edit">
+        <img src="../assets/images.png" alt="green check" />
       </button>
     </div>
   </div>
@@ -127,7 +141,7 @@ export default {
       inputDomain: "",
       inputRange: "",
       select: null,
-      disabled: true,
+      disabled: false,
       edit: false
     };
   },
@@ -172,6 +186,9 @@ h2 {
 .edit {
   width: 125px;
 }
+.background {
+  background-color: rgb(134, 194, 134);
+}
 .tableInput {
   margin: auto;
   border-collapse: collapse;
@@ -200,5 +217,8 @@ th {
 .footer img {
   height: 50px;
   width: 50px;
+}
+button:focus {
+  outline: none;
 }
 </style>
