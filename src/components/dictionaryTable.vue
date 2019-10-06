@@ -200,7 +200,6 @@ h2 {
 td,
 th {
   border-style: solid;
-  border-color: rgb(110, 17, 17);
   height: 40px;
   width: 128px;
   text-align: center;
